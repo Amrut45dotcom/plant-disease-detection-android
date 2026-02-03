@@ -1,320 +1,286 @@
-Plant Disease Detection Android Application
+**# Plant Disease Detection Android Application**
 
-Overview
 
 
+**## Overview**
 
-This project is an Android-based plant disease detection system that uses a Convolutional Neural Network (CNN) deployed via TensorFlow Lite. The application performs on-device inference to classify plant leaf images and predict the corresponding disease along with a confidence score.
+**This project is an Android-based plant disease detection system that uses a**
 
+**Convolutional Neural Network (CNN) deployed via TensorFlow Lite.**
 
 
-The system supports both camera capture and gallery image selection, enabling offline and real-time disease detection on mobile devices.
 
+**The application performs \*\*on-device inference\*\* to classify plant leaf images**
 
+**and predict the corresponding disease along with a confidence score.**
 
-Objectives
 
 
+**The system supports both \*\*camera capture\*\* and \*\*gallery image selection\*\*,**
 
-Detect plant diseases from leaf images using deep learning
+**enabling offline and real-time disease detection on mobile devices.**
 
 
 
-Deploy a trained CNN model on Android using TensorFlow Lite
+**---**
 
 
 
-Perform fast, offline inference directly on the device
+**## Objectives**
 
+**- Detect plant diseases from leaf images using deep learning**
 
+**- Deploy a trained CNN model on Android using TensorFlow Lite**
 
-Provide a simple user interface for image-based disease prediction
+**- Perform fast, offline inference directly on the device**
 
+**- Provide a simple user interface for image-based disease prediction**
 
 
-System Workflow
 
+**---**
 
 
-User captures an image using the camera or selects one from the gallery
 
+**## System Workflow**
 
+**1. User captures an image using the camera or selects one from the gallery**
 
-Image is resized and preprocessed on the device
+**2. Image is resized and preprocessed on the device**
 
+**3. TensorFlow Lite model performs inference**
 
+**4. Predicted disease label and confidence score are displayed**
 
-TensorFlow Lite model performs inference
 
 
+**---**
 
-Predicted disease label and confidence score are displayed
 
 
+**## Model Description**
 
-Model Description
+**- \*\*Model Type:\*\* Convolutional Neural Network (CNN)**
 
+**- \*\*Framework:\*\* TensorFlow / Keras**
 
+**- \*\*Deployment Format:\*\* Quantized TensorFlow Lite model (int8)**
 
-Model Type: Convolutional Neural Network (CNN)
+**- \*\*Input Size:\*\* 128 × 128 × 3 RGB image**
 
+**- \*\*Output:\*\* Confidence scores for each disease class**
 
 
-Framework: TensorFlow / Keras
 
+**The model is quantized to reduce memory footprint and improve inference speed**
 
+**on mobile devices.**
 
-Deployment Format: Quantized TensorFlow Lite model (int8)
 
 
+**---**
 
-Input Size: 128 × 128 × 3 RGB image
 
 
+**## Android Application Implementation**
 
-Output: Probability scores for each disease class
 
 
+**### Image Input**
 
-The model is quantized to improve inference speed and reduce memory usage on mobile devices.
+**- Camera capture using `MediaStore.ACTION\_IMAGE\_CAPTURE`**
 
+**- Gallery image selection using `Intent.ACTION\_PICK`**
 
 
-Android Application Implementation
 
-Image Input
+**### Preprocessing**
 
+**- Input image resized to 128 × 128**
 
+**- RGB pixel values extracted per channel**
 
-Camera capture using MediaStore.ACTION\_IMAGE\_CAPTURE
+**- Data loaded into a direct `ByteBuffer` using native byte order**
 
 
 
-Gallery image selection using Intent.ACTION\_PICK
+**### Inference**
 
+**- TensorFlow Lite `Interpreter` loads the model from the assets directory**
 
+**- Output tensor provides quantized confidence values**
 
-Preprocessing
+**- Top prediction is selected using maximum confidence score**
 
 
 
-Input image resized to 128 × 128
+**### Output**
 
+**- Predicted disease label**
 
+**- Confidence score displayed to the user**
 
-RGB pixel values extracted per channel
 
 
+**---**
 
-Data loaded into a direct ByteBuffer in native byte order
 
 
+**## User Interface**
 
-Inference
+**The user interface is implemented using XML layouts with `ConstraintLayout` and includes:**
 
+**- Image preview display**
 
+**- Button to capture image via camera**
 
-TensorFlow Lite Interpreter loads the model from the assets directory
+**- Button to select image from gallery**
 
+**- Text view displaying predicted disease and confidence score**
 
 
-Output tensor provides quantized confidence values
 
+**---**
 
 
-Confidence scores are dequantized and compared to select the top prediction
 
+**## Project Structure**
 
+**plant-disease-detection-android/**
 
-Output
+**│**
 
+**├── android-app/**
 
+**│ ├── app/**
 
-Predicted disease label
+**│ │ ├── src/main/java/ # Java source code**
 
+**│ │ ├── src/main/res/ # XML layouts and UI resources**
 
+**│ │ ├── src/main/assets/ # TFLite model and labels**
 
-Confidence score formatted and displayed to the user
+**│ │ └── AndroidManifest.xml**
 
+**│ │**
 
+**│ ├── gradle/**
 
-User Interface
+**│ ├── build.gradle.kts**
 
+**│ ├── settings.gradle.kts**
 
+**│ └── gradlew**
 
-The application interface includes:
+**│**
 
+**├── docs/**
 
+**│ └── screenshots/**
 
-Image preview display
+**│**
 
+**├── .gitignore**
 
+**└── README.md**
 
-Button to capture image via camera
 
 
+**---**
 
-Button to select image from gallery
 
 
+**## Dataset**
 
-Text view displaying predicted disease and confidence score
+**The dataset used to train the model is \*\*not included\*\* in this repository.**
 
 
 
-UI is implemented using XML layouts with ConstraintLayout.
+**Typical dataset structure:**
 
+**dataset/**
 
+**├── Disease\_Class\_1/**
 
-plant-disease-detection-android/
+**├── Disease\_Class\_2/**
 
-│
+**└── Disease\_Class\_N/**
 
-├── android-app/
 
-│   ├── app/
 
-│   │   ├── src/main/java/        # Java source code
+**Public datasets such as PlantVillage or custom-collected datasets may be used.**
 
-│   │   ├── src/main/res/         # XML layouts and UI resources
 
-│   │   ├── src/main/assets/      # TFLite model and labels
 
-│   │   └── AndroidManifest.xml
+**---**
 
-│   ├── gradle/
 
-│   ├── build.gradle.kts
 
-│   ├── settings.gradle.kts
+**## Setup and Execution**
 
-│   └── gradlew
+**1. Clone the repository**
 
-│
+**2. Open the `android-app/` directory in Android Studio**
 
-├── ml-model/
+**3. Allow Gradle to sync**
 
-│   ├── training/                # Model training scripts (not included)
+**4. Run the application on an emulator or physical Android device**
 
-│   ├── inference/               # Model conversion scripts
 
-│   └── requirements.txt
 
-│
+**Ensure the following files exist in:**
 
-├── docs/
+**android-app/app/src/main/assets/**
 
-│   └── screenshots/             # Application screenshots
+**- `plant\_disease\_int8.tflite`**
 
-│
+**- `labels.txt`**
 
-├── .gitignore
 
-└── README.md
 
+**---**
 
 
 
+**## Limitations**
 
-Dataset
+**- Prediction limited to trained disease classes**
 
+**- Accuracy depends on image quality and lighting conditions**
 
+**- Disease severity estimation is not implemented**
 
-The dataset used to train the model is not included in this repository.
 
 
+**---**
 
-Typical dataset structure:
 
-dataset/
 
-├── Disease\_Class\_1/
+**## Future Enhancements**
 
-├── Disease\_Class\_2/
+**- Disease severity estimation**
 
-└── Disease\_Class\_N/
+**- Model explainability using Grad-CAM**
 
-Public datasets such as PlantVillage or custom-collected images may be used.
+**- Support for additional crops and diseases**
 
+**- Improved UI/UX and multilingual support**
 
 
-Setup and Execution
 
+**---**
 
 
-Clone the repository
 
+**## Author**
 
+**\*\*Amrutanshu Sahoo\*\***
 
-Open the android-app/ directory in Android Studio
 
 
+**Final-year engineering project on plant disease detection using deep learning**
 
-Allow Gradle to sync
+**and mobile deployment.**
 
 
-
-Run the application on an emulator or physical Android device
-
-
-
-Ensure the following files exist in:
-
-android-app/app/src/main/assets/
-
-
-
-plant\_disease\_int8.tflite
-
-
-
-labels.txt
-
-
-
-Limitations
-
-
-
-Model predicts only among trained disease classes
-
-
-
-Performance depends on image quality and lighting conditions
-
-
-
-No severity estimation is currently implemented
-
-
-
-Future Enhancements
-
-
-
-Disease severity estimation
-
-
-
-Explainability using Grad-CAM
-
-
-
-Support for additional crops and diseases
-
-
-
-Improved UI/UX and multilingual support
-
-
-
-Author
-
-
-
-Amrutanshu Sahoo
-
-
-
-Final-year engineering project on plant disease detection using deep learning and mobile deployment.
 
