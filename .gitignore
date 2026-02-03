@@ -1,0 +1,27 @@
+# ===== Python / ML =====
+__pycache__/
+.ipynb_checkpoints/
+*.py[cod]
+
+venv/
+.env/
+.venv/
+
+# ML models & data
+*.h5
+*.keras
+*.pt
+*.pth
+*.onnx
+
+data/
+dataset/
+datasets/
+*.zip
+
+logs/
+*.log
+
+# ===== OS =====
+.DS_Store
+Thumbs.db
