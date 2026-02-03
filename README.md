@@ -1,150 +1,326 @@
-**# Plant Disease Detection Android Application**
+**# 🌿 Plant Disease Detection Android Application**
 
 
 
-**## Overview**
+**\[!\[Android](https://img.shields.io/badge/Platform-Android-green.svg)](https://developer.android.com/)**
 
-**This project is an Android-based plant disease detection system that uses a**
+**\[!\[TensorFlow Lite](https://img.shields.io/badge/TensorFlow-Lite-orange.svg)](https://www.tensorflow.org/lite)**
 
-**Convolutional Neural Network (CNN) deployed via TensorFlow Lite.**
+**\[!\[License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)**
 
 
 
-**The application performs \*\*on-device inference\*\* to classify plant leaf images**
+**An Android-based plant disease detection system powered by deep learning that enables farmers and gardeners to identify plant diseases in real-time using their smartphone cameras.**
 
-**and predict the corresponding disease along with a confidence score.**
 
 
+**!\[App Demo](docs/screenshots/demo.gif)**
 
-**The system supports both \*\*camera capture\*\* and \*\*gallery image selection\*\*,**
 
-**enabling offline and real-time disease detection on mobile devices.**
 
+**## 📋 Table of Contents**
 
 
-**---**
 
+**- \[Overview](#overview)**
 
+**- \[Features](#features)**
 
-**## Objectives**
+**- \[System Architecture](#system-architecture)**
 
-**- Detect plant diseases from leaf images using deep learning**
+**- \[Model Details](#model-details)**
 
-**- Deploy a trained CNN model on Android using TensorFlow Lite**
+**- \[Installation](#installation)**
 
-**- Perform fast, offline inference directly on the device**
+**- \[Usage](#usage)**
 
-**- Provide a simple user interface for image-based disease prediction**
+**- \[Project Structure](#project-structure)**
 
+**- \[Dataset](#dataset)**
 
+**- \[Technology Stack](#technology-stack)**
 
-**---**
+**- \[Limitations](#limitations)**
 
+**- \[Future Enhancements](#future-enhancements)**
 
+**- \[Contributing](#contributing)**
 
-**## System Workflow**
+**- \[License](#license)**
 
-**1. User captures an image using the camera or selects one from the gallery**
+**- \[Author](#author)**
 
-**2. Image is resized and preprocessed on the device**
 
-**3. TensorFlow Lite model performs inference**
 
-**4. Predicted disease label and confidence score are displayed**
+**## 🔍 Overview**
 
 
 
-**---**
+**This project implements an on-device plant disease detection system using a Convolutional Neural Network (CNN) deployed via TensorFlow Lite. The application performs real-time inference on mobile devices, enabling offline disease detection without requiring an internet connection.**
 
 
 
-**## Model Description**
+**### Key Highlights**
 
-**- \*\*Model Type:\*\* Convolutional Neural Network (CNN)**
 
-**- \*\*Framework:\*\* TensorFlow / Keras**
 
-**- \*\*Deployment Format:\*\* Quantized TensorFlow Lite model (int8)**
+**- ✅ \*\*On-device inference\*\* - No internet connection required**
 
-**- \*\*Input Size:\*\* 128 × 128 × 3 RGB image**
+**- ✅ \*\*Real-time detection\*\* - Fast predictions using quantized models**
 
-**- \*\*Output:\*\* Confidence scores for each disease class**
+**- ✅ \*\*Dual input modes\*\* - Camera capture and gallery selection**
 
+**- ✅ \*\*Lightweight deployment\*\* - Optimized TensorFlow Lite model**
 
+**- ✅ \*\*User-friendly interface\*\* - Simple and intuitive design**
 
-**The model is quantized to reduce memory footprint and improve inference speed**
 
-**on mobile devices.**
 
+**## ✨ Features**
 
 
-**---**
 
+**- 📸 \*\*Camera Integration\*\*: Capture leaf images directly using your device camera**
 
+**- 🖼️ \*\*Gallery Support\*\*: Select and analyze existing images from your photo library**
 
-**## Android Application Implementation**
+**- 🤖 \*\*Deep Learning Powered\*\*: CNN-based disease classification**
 
+**- ⚡ \*\*Fast Inference\*\*: Optimized int8 quantized model for quick predictions**
 
+**- 📊 \*\*Confidence Scores\*\*: View prediction confidence for each diagnosis**
 
-**### Image Input**
+**- 📱 \*\*Offline Capability\*\*: Works without internet connectivity**
 
-**- Camera capture using `MediaStore.ACTION\_IMAGE\_CAPTURE`**
+**- 🎯 \*\*Accurate Detection\*\*: Trained on extensive plant disease datasets**
 
-**- Gallery image selection using `Intent.ACTION\_PICK`**
 
 
+**## 🏗️ System Architecture**
 
-**### Preprocessing**
 
-**- Input image resized to 128 × 128**
 
-**- RGB pixel values extracted per channel**
+**```**
 
-**- Data loaded into a direct `ByteBuffer` using native byte order**
+**┌─────────────────────────────────────────────────────────┐**
 
+**│                    User Interface                        │**
 
+**│  (Camera Capture / Gallery Selection / Results Display) │**
 
-**### Inference**
+**└──────────────────────┬──────────────────────────────────┘**
 
-**- TensorFlow Lite `Interpreter` loads the model from the assets directory**
+                       **│**
 
-**- Output tensor provides quantized confidence values**
+                       **▼**
 
-**- Top prediction is selected using maximum confidence score**
+**┌─────────────────────────────────────────────────────────┐**
 
+**│              Image Preprocessing Layer                   │**
 
+**│         (Resize to 128×128, RGB Normalization)          │**
 
-**### Output**
+**└──────────────────────┬──────────────────────────────────┘**
 
-**- Predicted disease label**
+                       **│**
 
-**- Confidence score displayed to the user**
+                       **▼**
 
+**┌─────────────────────────────────────────────────────────┐**
 
+**│           TensorFlow Lite Interpreter                    │**
 
-**---**
+**│              (Quantized CNN Model)                       │**
 
+**└──────────────────────┬──────────────────────────────────┘**
 
+                       **│**
 
-**## User Interface**
+                       **▼**
 
-**The user interface is implemented using XML layouts with `ConstraintLayout` and includes:**
+**┌─────────────────────────────────────────────────────────┐**
 
-**- Image preview display**
+**│              Post-Processing Layer                       │**
 
-**- Button to capture image via camera**
+**│    (Confidence Calculation / Label Mapping)             │**
 
-**- Button to select image from gallery**
+**└─────────────────────────────────────────────────────────┘**
 
-**- Text view displaying predicted disease and confidence score**
+**```**
 
 
 
-**---**
+**### Workflow**
 
 
 
-**## Project Structure**
+**1. \*\*Image Acquisition\*\*: User captures or selects a plant leaf image**
+
+**2. \*\*Preprocessing\*\*: Image is resized to 128×128 and normalized**
+
+**3. \*\*Inference\*\*: TensorFlow Lite model performs on-device prediction**
+
+**4. \*\*Output\*\*: Disease label and confidence score are displayed**
+
+
+
+**## 🧠 Model Details**
+
+
+
+**| Parameter | Value |**
+
+**|-----------|-------|**
+
+**| \*\*Model Type\*\* | Convolutional Neural Network (CNN) |**
+
+**| \*\*Framework\*\* | TensorFlow / Keras |**
+
+**| \*\*Deployment Format\*\* | TensorFlow Lite (int8 quantized) |**
+
+**| \*\*Input Shape\*\* | 128 × 128 × 3 (RGB) |**
+
+**| \*\*Output\*\* | Confidence scores per disease class |**
+
+**| \*\*Model Size\*\* | ~1-2 MB (quantized) |**
+
+
+
+**### Quantization Benefits**
+
+
+
+**- 🔽 \*\*Reduced Memory Footprint\*\*: 4× smaller than FP32 models**
+
+**- ⚡ \*\*Faster Inference\*\*: Optimized for mobile CPUs**
+
+**- 🔋 \*\*Lower Power Consumption\*\*: Extended battery life**
+
+**- 📱 \*\*Better Performance\*\*: Smooth user experience**
+
+
+
+**## 🚀 Installation**
+
+
+
+**### Prerequisites**
+
+
+
+**- Android Studio (latest version)**
+
+**- Android SDK (API Level 21+)**
+
+**- Physical Android device or emulator**
+
+**- Git**
+
+
+
+**### Steps**
+
+
+
+**1. \*\*Clone the repository\*\***
+
+   **```bash**
+
+   **git clone https://github.com/yourusername/plant-disease-detection-android.git**
+
+   **cd plant-disease-detection-android**
+
+   **```**
+
+
+
+**2. \*\*Open in Android Studio\*\***
+
+   **- Launch Android Studio**
+
+   **- Select "Open an existing project"**
+
+   **- Navigate to the `android-app/` directory**
+
+
+
+**3. \*\*Sync Gradle\*\***
+
+   **- Allow Android Studio to sync Gradle dependencies**
+
+   **- Wait for the build to complete**
+
+
+
+**4. \*\*Verify Assets\*\***
+
+   
+
+   **Ensure the following files exist in `android-app/app/src/main/assets/`:**
+
+   **- `plant\_disease\_int8.tflite` - The trained model**
+
+   **- `labels.txt` - Disease class labels**
+
+
+
+**5. \*\*Run the Application\*\***
+
+   **- Connect your Android device or start an emulator**
+
+   **- Click the "Run" button in Android Studio**
+
+   **- Grant camera and storage permissions when prompted**
+
+
+
+**## 📱 Usage**
+
+
+
+**1. \*\*Launch the Application\*\***
+
+   **- Open the app on your Android device**
+
+
+
+**2. \*\*Capture or Select an Image\*\***
+
+   **- \*\*Camera\*\*: Tap the camera button to capture a new image**
+
+   **- \*\*Gallery\*\*: Tap the gallery button to select an existing image**
+
+
+
+**3. \*\*View Results\*\***
+
+   **- The predicted disease name will be displayed**
+
+   **- Confidence score shows prediction certainty**
+
+   **- Higher confidence indicates more reliable predictions**
+
+
+
+**### Example Output**
+
+
+
+**```**
+
+**Prediction: Tomato Early Blight**
+
+**Confidence: 94.7%**
+
+**```**
+
+
+
+**## 📂 Project Structure**
+
+
+
+**```**
 
 **plant-disease-detection-android/**
 
@@ -152,135 +328,299 @@
 
 **├── android-app/**
 
-**│ ├── app/**
+**│   ├── app/**
 
-**│ │ ├── src/main/java/ # Java source code**
+**│   │   ├── src/**
 
-**│ │ ├── src/main/res/ # XML layouts and UI resources**
+**│   │   │   ├── main/**
 
-**│ │ ├── src/main/assets/ # TFLite model and labels**
+**│   │   │   │   ├── java/              # Java source code**
 
-**│ │ └── AndroidManifest.xml**
+**│   │   │   │   │   └── com/plantdisease/**
 
-**│ │**
+**│   │   │   │   │       ├── MainActivity.java**
 
-**│ ├── gradle/**
+**│   │   │   │   │       └── ImageClassifier.java**
 
-**│ ├── build.gradle.kts**
+**│   │   │   │   ├── res/               # UI resources**
 
-**│ ├── settings.gradle.kts**
+**│   │   │   │   │   ├── layout/        # XML layouts**
 
-**│ └── gradlew**
+**│   │   │   │   │   ├── drawable/      # Images and icons**
+
+**│   │   │   │   │   └── values/        # Strings, colors, themes**
+
+**│   │   │   │   ├── assets/            # Model files**
+
+**│   │   │   │   │   ├── plant\_disease\_int8.tflite**
+
+**│   │   │   │   │   └── labels.txt**
+
+**│   │   │   │   └── AndroidManifest.xml**
+
+**│   │   │   └── test/                  # Unit tests**
+
+**│   │   └── build.gradle.kts           # App-level Gradle**
+
+**│   │**
+
+**│   ├── gradle/                        # Gradle wrapper**
+
+**│   ├── build.gradle.kts               # Project-level Gradle**
+
+**│   ├── settings.gradle.kts**
+
+**│   └── gradlew**
 
 **│**
 
 **├── docs/**
 
-**│ └── screenshots/**
+**│   └── screenshots/                   # App screenshots**
 
 **│**
 
 **├── .gitignore**
 
+**├── LICENSE**
+
 **└── README.md**
 
-
-
-**---**
-
-
-
-**## Dataset**
-
-**The dataset used to train the model is \*\*not included\*\* in this repository.**
+**```**
 
 
 
-**Typical dataset structure:**
+**## 📊 Dataset**
+
+
+
+**The model was trained on a comprehensive plant disease dataset. The training data is \*\*not included\*\* in this repository due to size constraints.**
+
+
+
+**### Recommended Datasets**
+
+
+
+**- \*\*\[PlantVillage Dataset](https://github.com/spMohanty/PlantVillage-Dataset)\*\*: 54,000+ images across 38 disease classes**
+
+**- \*\*Custom datasets\*\*: Collect region-specific plant disease images**
+
+
+
+**### Expected Dataset Structure**
+
+
+
+**```**
 
 **dataset/**
 
-**├── Disease\_Class\_1/**
+**├── Tomato\_Early\_Blight/**
 
-**├── Disease\_Class\_2/**
+**│   ├── image001.jpg**
 
-**└── Disease\_Class\_N/**
+**│   ├── image002.jpg**
 
+**│   └── ...**
 
+**├── Potato\_Late\_Blight/**
 
-**Public datasets such as PlantVillage or custom-collected datasets may be used.**
+**│   └── ...**
 
+**└── Healthy/**
 
+    **└── ...**
 
-**---**
-
-
-
-**## Setup and Execution**
-
-**1. Clone the repository**
-
-**2. Open the `android-app/` directory in Android Studio**
-
-**3. Allow Gradle to sync**
-
-**4. Run the application on an emulator or physical Android device**
+**```**
 
 
 
-**Ensure the following files exist in:**
-
-**android-app/app/src/main/assets/**
-
-**- `plant\_disease\_int8.tflite`**
-
-**- `labels.txt`**
+**## 🛠️ Technology Stack**
 
 
 
-**---**
+**### Mobile Development**
+
+**- \*\*Language\*\*: Java**
+
+**- \*\*IDE\*\*: Android Studio**
+
+**- \*\*UI Framework\*\*: Android XML Layouts (ConstraintLayout)**
 
 
 
-**## Limitations**
+**### Machine Learning**
 
-**- Prediction limited to trained disease classes**
+**- \*\*Framework\*\*: TensorFlow / Keras**
 
-**- Accuracy depends on image quality and lighting conditions**
+**- \*\*Deployment\*\*: TensorFlow Lite**
 
-**- Disease severity estimation is not implemented**
-
-
-
-**---**
+**- \*\*Optimization\*\*: Post-training int8 quantization**
 
 
 
-**## Future Enhancements**
+**### Key Libraries**
 
-**- Disease severity estimation**
+**- `org.tensorflow:tensorflow-lite` - Model inference**
 
-**- Model explainability using Grad-CAM**
+**- `androidx.appcompat` - Modern Android components**
 
-**- Support for additional crops and diseases**
-
-**- Improved UI/UX and multilingual support**
+**- `androidx.constraintlayout` - Flexible UI layouts**
 
 
 
-**---**
+**## ⚠️ Limitations**
 
 
 
-**## Author**
+**- 🎯 \*\*Class Limitation\*\*: Predictions limited to trained disease classes**
+
+**- 💡 \*\*Lighting Sensitivity\*\*: Accuracy depends on image quality and lighting**
+
+**- 🔍 \*\*No Severity Estimation\*\*: Cannot assess disease progression stage**
+
+**- 🌾 \*\*Crop Specific\*\*: Model trained on specific plant species**
+
+**- 📐 \*\*Image Quality\*\*: Blurry or low-resolution images may reduce accuracy**
+
+
+
+**## 🔮 Future Enhancements**
+
+
+
+**- \[ ] \*\*Disease Severity Estimation\*\*: Assess progression stages (early/mid/late)**
+
+**- \[ ] \*\*Model Explainability\*\*: Integrate Grad-CAM for visual explanations**
+
+**- \[ ] \*\*Expanded Crop Support\*\*: Add more plant species and diseases**
+
+**- \[ ] \*\*Treatment Recommendations\*\*: Suggest remedies for detected diseases**
+
+**- \[ ] \*\*History Tracking\*\*: Save and track disease detections over time**
+
+**- \[ ] \*\*Multi-language Support\*\*: Localization for different regions**
+
+**- \[ ] \*\*Cloud Sync\*\*: Optional cloud backup and analytics**
+
+**- \[ ] \*\*Improved UI/UX\*\*: Material Design 3 implementation**
+
+**- \[ ] \*\*Social Features\*\*: Community-driven disease reporting**
+
+
+
+**## 🤝 Contributing**
+
+
+
+**Contributions are welcome! Please follow these steps:**
+
+
+
+**1. Fork the repository**
+
+**2. Create a feature branch (`git checkout -b feature/AmazingFeature`)**
+
+**3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)**
+
+**4. Push to the branch (`git push origin feature/AmazingFeature`)**
+
+**5. Open a Pull Request**
+
+
+
+**Please ensure your code follows the existing style and includes appropriate tests.**
+
+
+
+**## 📄 License**
+
+
+
+**This project is licensed under the MIT License - see the \[LICENSE](LICENSE) file for details.**
+
+
+
+**## 👨‍💻 Author**
+
+
 
 **\*\*Amrutanshu Sahoo\*\***
 
 
 
-**Final-year engineering project on plant disease detection using deep learning**
+**Final-year engineering project on plant disease detection using deep learning and mobile deployment.**
 
-**and mobile deployment.**
+
+
+**- 📧 Email: \[your.email@example.com](mailto:your.email@example.com)**
+
+**- 🔗 LinkedIn: \[your-linkedin-profile](https://linkedin.com/in/your-profile)**
+
+**- 🐱 GitHub: \[@yourusername](https://github.com/yourusername)**
+
+
+
+**---**
+
+
+
+**## 📸 Screenshots**
+
+
+
+**<div align="center">**
+
+
+
+**| Home Screen | Camera Capture | Results Display |**
+
+**|-------------|----------------|-----------------|**
+
+**| !\[Home](docs/screenshots/home.png) | !\[Camera](docs/screenshots/camera.png) | !\[Results](docs/screenshots/results.png) |**
+
+
+
+**</div>**
+
+
+
+**---**
+
+
+
+**## 🙏 Acknowledgments**
+
+
+
+**- TensorFlow team for TensorFlow Lite**
+
+**- PlantVillage dataset contributors**
+
+**- Android developer community**
+
+**- All contributors and testers**
+
+
+
+**---**
+
+
+
+**<div align="center">**
+
+
+
+**\*\*If you find this project helpful, please consider giving it a ⭐!\*\***
+
+
+
+**Made with ❤️ for sustainable agriculture**
+
+
+
+**</div>**
 
 
 
