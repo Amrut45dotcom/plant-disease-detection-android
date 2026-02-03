@@ -25,3 +25,8 @@ logs/
 # ===== OS =====
 .DS_Store
 Thumbs.db
+
+# ===== Android / IDE =====
+.idea/
+.gradle/
+
